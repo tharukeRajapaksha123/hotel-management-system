@@ -1,9 +1,13 @@
-import React,{useEffect,useState} from 'react'
-import {Modal, Form, Input, Row, Col, Button } from "antd"
-const AddRoomModal = ({ handleOk, handleCancel ,isModalOpen,roomData}) => {
+import React, { useEffect, useState } from 'react'
+import { Modal, Form, Input, Row, Col, Button } from "antd"
+import axios from "axios"
+import { baseUrl } from "../../config"
+
+
+const AddRoomModal = ({ handleOk, handleCancel, isModalOpen, roomData }) => {
 
    const [form] = Form.useForm();
- 
+
 
    const [roomType, setRoomType] = useState("");
    const [costPerDay, setCostPerDay] = useState("");
@@ -19,16 +23,29 @@ const AddRoomModal = ({ handleOk, handleCancel ,isModalOpen,roomData}) => {
       if (roomData != null) {
          console.log("called");
          setRoomType(roomData["type"]);
-         setCostPerDay(roomData["cost"])
-         setFac(roomData["fac"])
-         setImageUrl(roomData["image"])
+         setCostPerDay(roomData["cost_per_day"])
+         setFac(roomData["facilities"])
+         setImageUrl(roomData["image_url"])
          setNoOfBeds(roomData["no_of_beds"])
       }
    }, [roomData]);
 
 
-   const createRoom = ()=>{
-      
+   const createRoom = async () => {
+      const room = {
+         "image_url": imageUrl,
+         "type": roomType,
+         "cost_per_day": costPerDay,
+         "no_of_beds": noOfBeds,
+         "facilities": fac,
+      }
+
+      if (roomData) {
+         await axios.put(`${baseUrl}/room-controller/update-room/${roomData["_id"]}`, room)
+      } else {
+         await axios.post(`${baseUrl}/room-controller/create-room/`, room)
+      }
+      handleOk();
    }
 
    return (
@@ -41,7 +58,7 @@ const AddRoomModal = ({ handleOk, handleCancel ,isModalOpen,roomData}) => {
             }}
             onValuesChange={onRequiredTypeChange}
             requiredMark={requiredMark}
-            action={() => { }}
+            action={() => { createRoom() }}
          >
             <Row>
                <Col span={11}>
@@ -96,7 +113,7 @@ const AddRoomModal = ({ handleOk, handleCancel ,isModalOpen,roomData}) => {
                </Col>
                <Col span={4}>
                   <Form.Item>
-                     <Button type="primary" htmlType='submit' onClick={() => { handleOk() }} style={{ width: "100%", margin: "0 8px" }}>Submit</Button>
+                     <Button type="primary" htmlType='submit' onClick={() => { createRoom(); }} style={{ width: "100%", margin: "0 8px" }}>{roomData ? "Edit" : "Submit"}</Button>
                   </Form.Item>
                </Col>
             </Row>
