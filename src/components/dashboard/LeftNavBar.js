@@ -5,9 +5,10 @@ import React from 'react'
 import { Menu } from 'antd';
 
 
-function getItem(label, key,  onclick) {
+function getItem(label, key,  onclick,children) {
    return {
       key,
+      children,
       label,
       onClick: () => { onclick() }
    };
@@ -22,8 +23,12 @@ const LeftNavBar = ({ bodyIndexChanger }) => {
       getItem('Wedding &  Hall Banquets', '5',() => bodyIndexChanger(4)),
       getItem('Employees Management', '6',() => bodyIndexChanger(5)),
       getItem('Services Management', '7',() => bodyIndexChanger(6)),
-      getItem('Resturant Management', '8',() => bodyIndexChanger(7)),
-      getItem('Transport Management', '9',() => bodyIndexChanger(8)),
+      getItem('Resturant Management', 'sub1',()=>{}, [
+            getItem("Food Management","8",() => bodyIndexChanger(7)),
+            getItem("Table Management","9",() => bodyIndexChanger(8)),
+            getItem("Customer Management","10",() => bodyIndexChanger(9))
+      ]),
+      getItem('Transport Management', '11',() => bodyIndexChanger(10)),
    ];
    return (
       <div

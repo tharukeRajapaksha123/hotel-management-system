@@ -4,7 +4,7 @@ import { CustomRow } from '../../conmmon/CustomRow'
 import EmployeesBody from '../employees_management/EmployeesBody'
 import HotelManagemenrBody from '../hotel_manager/HotelManagemenrBody'
 import InventoryBody from '../inventory/InventoryBody'
-import ResturentManagerBody from '../resturent_management/ResturentManagerBody'
+import FoodItemsBody from '../resturent_management/FoodItemsBody'
 import RoomReservationBody from '../room_reservation/RoomReservationBody'
 import ServoceManagerBody from '../services_management/ServoceManagerBody'
 import TrasnportManagerBody from '../transport_management/TrasnportManagerBody'
@@ -29,8 +29,12 @@ const Dashboard = () => {
          case 6:
             return <ServoceManagerBody />;
          case 7:
-            return <ResturentManagerBody />;
+            return <FoodItemsBody />;
          case 8:
+            return <div />;
+         case 9:
+            return <div />;
+         case 10:
             return <TrasnportManagerBody />;
          default:
             return <div />
