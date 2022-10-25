@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { CustomColumn } from '../../conmmon/CustomColumn'
 import { CustomRow } from '../../conmmon/CustomRow'
+import CustomerManagementBody from '../customer_management/CustomerManagementBody'
 import EmployeesBody from '../employees_management/EmployeesBody'
 import HotelManagemenrBody from '../hotel_manager/HotelManagemenrBody'
 import InventoryBody from '../inventory/InventoryBody'
@@ -33,7 +34,7 @@ const Dashboard = () => {
          case 8:
             return <div />;
          case 9:
-            return <div />;
+            return <CustomerManagementBody />;
          case 10:
             return <TrasnportManagerBody />;
          default:
